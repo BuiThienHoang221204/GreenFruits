@@ -3,7 +3,7 @@ import { assets } from '../assets/assets'
 
 function NewsLetter() {
     return (
-        <div className="mt-6 flex flex-col items-center  text-gray-900/60 rounded-xl md:w-full md:py-8 py-6">
+        <div className="mt-6 flex flex-col items-center text-gray-900/60 rounded-xl md:w-full md:py-8 py-6 bg-primary/5">
             <div className="flex items-center justify-center p-3 bg-red-100 rounded-full">
                 <img src={assets.logo} alt="faceIcon" />
             </div>

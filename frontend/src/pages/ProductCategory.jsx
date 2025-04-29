@@ -20,7 +20,7 @@ function ProductCategory() {
                 </div>
             )}
             {filteredProducts.length > 0 ? (
-                <div className='flex flex-wrap gap-10 mt-6 items-start justify-center md:justify-start'>
+                <div className='flex flex-wrap gap-8 mt-6 items-start justify-center md:justify-start'>
                     {filteredProducts.map((product, index) => (
                         <ProductCard key={index} product={product} />
                     ))}

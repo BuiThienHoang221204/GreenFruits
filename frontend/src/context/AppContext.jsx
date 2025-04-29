@@ -79,7 +79,7 @@ export const AppProvider = ({ children }) => {
             cartData[itemId] = 1
         }
         setCartItems(cartData)
-        toast.success('Added to cart')
+        toast.success('Đã thêm vào giỏi hàng')
     };
     //cập nhật giỏ hàng
     const updateCart = (itemId, quantity) => {
@@ -98,7 +98,7 @@ export const AppProvider = ({ children }) => {
             }
         }
         setCartItems(cartData)
-        toast.success('Removed from cart')
+        toast.success('Đã xóa khỏi giỏ hàng')
     };
     //lấy số lượng mặt hàng trong giỏi hàng 
     const getCartCount = () => {
