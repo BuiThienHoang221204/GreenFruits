@@ -10,6 +10,7 @@ function SellerLayout() {
         { name: "Add Product", path: "/seller", icon: assets.add_icon },
         { name: "Product List", path: "/seller/product-list", icon: assets.product_list_icon },
         { name: "Orders", path: "/seller/orders", icon: assets.order_icon },
+        { name: "Comments", path: "/seller/comments", icon: assets.product_list_icon },
     ];
     const logout = async () => {
         setIsSeller(false)

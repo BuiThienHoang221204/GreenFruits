@@ -11,6 +11,7 @@ import cartRouter from './routes/cartRoute.js'
 import addressRoute from './routes/addressRoute.js'
 import orderRoute from './routes/orderRoute.js'
 import contactRouter from './routes/contactRoute.js'
+import chatboxRouter from './routes/chatboxRoute.js'
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -19,7 +20,7 @@ await connectDB() //Kết nối tới database mongodb
 await connectCloudinary() // kết nối tới cloudinary
 
 //cho phép port 5173 từ frontend truy cập vào
-const allowedOrigins = ['http://localhost:5173']
+const allowedOrigins = ['http://localhost:5173' || process.env.FRONTEND_URL] //đường dẫn đến frontend
 //Dùng middleware để đọc dữ liệu json từ req
 app.use(express.json())
 app.use(cors({origin: allowedOrigins, credentials: true}))
@@ -34,6 +35,7 @@ app.use('/api/cart', cartRouter) // sử dụng router cho các route liên quan
 app.use('/api/address', addressRoute) // sử dụng router cho các route liên quan đến address
 app.use('/api/order', orderRoute) // sử dụng router cho các route liên quan đến order)
 app.use('/api/contact', contactRouter) // sử dụng router cho các route liên quan đến contact
+app.use('/api/ask', chatboxRouter) // sử dụng router cho các route liên quan đến chatbox
 
 //khởi chạy port
 app.listen(port, () => {

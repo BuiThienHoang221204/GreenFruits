@@ -19,6 +19,8 @@ import SellerLayout from './pages/seller/SellerLayout'
 import AddProduct from './pages/seller/AddProduct'
 import ProductList from './pages/seller/ProductList'
 import Orders from './pages/seller/Orders'
+import Chatbox from './components/Chatbox'
+import Comments from './pages/seller/Comments'
 
 function App() {
   const isSellerPath = useLocation().pathname.includes('/seller')// check xem có phải là đường dẫn của seller hay không
@@ -28,6 +30,7 @@ function App() {
         {isSellerPath ? null : <Header/>}
         {showUserLogin ? <Login/> : null}
         <Toaster/>
+        <Chatbox/>
         <div className={`${isSellerPath ? "":"container mx-auto"}`}>
           <Routes>
             <Route path='/' element={<Home />} />
@@ -42,6 +45,7 @@ function App() {
               <Route index element = {isSeller ? <AddProduct/> : null}/>
               <Route path='product-list' element = {<ProductList/> }/>
               <Route path='orders' element={<Orders/>}/>
+              <Route path='comments' element={<Comments/>}/>
             </Route>
           </Routes>
         </div>
