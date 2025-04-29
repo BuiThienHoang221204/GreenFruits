@@ -1,0 +1,3 @@
+#chặn env và noed_moudles
+node_modules/
+.env
