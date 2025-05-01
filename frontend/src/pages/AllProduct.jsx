@@ -7,7 +7,7 @@ function AllProduct() {
     const { products, searchQuery, filteredCategory } = useAppContext()
     const [filterProducts, setFilterProducts] = useState([])
     const [currentProduct, setCurrentProduct] = useState(1)
-    const productPerPages = 12
+    const productPerPages = 15
     const indexOfLastProduct = productPerPages * currentProduct
     const indexOfFirstProduct = indexOfLastProduct - productPerPages
     const currentProducts = filterProducts.slice(indexOfFirstProduct, indexOfLastProduct)
@@ -37,7 +37,7 @@ function AllProduct() {
                                 ))}
                             </div>
                             <div className="flex items-center justify-center mt-6 gap-2">
-                                {([...Array(Math.ceil(products.length / productPerPages))]).map((_, index) => (
+                                {([...Array(Math.ceil(filterProducts.length / productPerPages))]).map((_, index) => (
                                     <div key={index}>
                                         <div className="flex gap-2 text-gray-500 text-sm md:text-base mt-6">
                                             <button

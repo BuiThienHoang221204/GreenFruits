@@ -12,7 +12,7 @@ function SideBar() {
         { text: 'Cold Drinks', path: 'Drinks' },
         { text: 'Instant Food', path: 'Instant' },
         { text: 'Dairy Products', path: 'Dairy' },
-        { text: 'Bakery & Breads', path: 'Bakery' },
+        { text: 'Bakery & Snack', path: 'Bakery' },
         { text: 'Grains & Cereals', path: 'Grains' },
     ];
 

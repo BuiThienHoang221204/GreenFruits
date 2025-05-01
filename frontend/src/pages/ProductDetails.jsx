@@ -15,7 +15,7 @@ function ProductDetails() {
         if (products.length > 0) {
             let productsCopy = products.slice()
             productsCopy = productsCopy.filter((item) => product.category === item.category)
-            setRelatedProducts(productsCopy.slice(0, 5))
+            setRelatedProducts(productsCopy.slice(0, 6))
         }
     }, [product]);
     useEffect(() => {
@@ -90,7 +90,7 @@ function ProductDetails() {
                     <p className='text-3xl font-medium'>Related Products</p>
                     <div className='w-20 h-0.5 bg-primary rounded-full mt-2'></div>
                 </div>
-                <div className='flex flex-wrap gap-10 mt-6 items-start justify-center md:justify-start'>
+                <div className='flex flex-wrap gap-8 mt-6 items-start justify-center md:justify-start'>
                     {relatedProducts.filter(product => product.inStock).map((product) => (
                         <ProductCard key={product._id} product={product} />
                     ))}

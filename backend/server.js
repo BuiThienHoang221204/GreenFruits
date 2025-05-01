@@ -12,6 +12,7 @@ import addressRoute from './routes/addressRoute.js'
 import orderRoute from './routes/orderRoute.js'
 import contactRouter from './routes/contactRoute.js'
 import chatboxRouter from './routes/chatboxRoute.js'
+import { stripeWebhook } from './controllers/orderController.js'
 
 const app = express()
 const port = process.env.PORT || 5000
@@ -21,6 +22,9 @@ await connectCloudinary() // kết nối tới cloudinary
 
 //cho phép port 5173 từ frontend truy cập vào
 const allowedOrigins = ['http://localhost:5173' || process.env.FRONTEND_URL] //đường dẫn đến frontend
+
+app.post('/stripe', express.raw({type: 'application/json'}), stripeWebhook) // middleware để xử lý dữ liệu thô từ stripe
+
 //Dùng middleware để đọc dữ liệu json từ req
 app.use(express.json())
 app.use(cors({origin: allowedOrigins, credentials: true}))

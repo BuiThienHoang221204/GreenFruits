@@ -21,6 +21,7 @@ import ProductList from './pages/seller/ProductList'
 import Orders from './pages/seller/Orders'
 import Chatbox from './components/Chatbox'
 import Comments from './pages/seller/Comments'
+import Loading from './components/Loading'
 
 function App() {
   const isSellerPath = useLocation().pathname.includes('/seller')// check xem có phải là đường dẫn của seller hay không
@@ -38,6 +39,7 @@ function App() {
             <Route path='/products/:category' element={<ProductCategory/>} />
             <Route path='/cart' element={<Cart/>} />
             <Route path='/my-orders' element={<MyOrders/>} />
+            <Route path='/loader' element={<Loading/>} />
             <Route path='/products/:category/:id' element={<ProductDetails/>} />
             <Route path='/add-address' element={<AddAddress/>} />
             <Route path='/contact' element={<Contact/>} />
