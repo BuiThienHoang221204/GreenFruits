@@ -21,7 +21,7 @@ export const register = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true, //ngăn chặn truy cập từ JavaScript phía client
             secure: process.env.NODE_ENV === 'production', //chỉ gửi cookie qua kết nối HTTPS trong môi trường production
-            sameSite: process.env.NODE_ENV === 'production' ? '' : 'strict', //cookie chỉ được gửi khi yêu cầu đến từ cùng một trang web
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', //cookie chỉ được gửi khi yêu cầu đến từ cùng một trang web
             maxAge: 7 * 24 * 60 * 60 * 1000 // thời gian sống của cookie là 7 ngày
         })
         return res.status(201).json({success: true, message: "Đăng ký thành công", user : {email: user.email, name: user.name}})
