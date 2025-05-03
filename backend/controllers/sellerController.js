@@ -8,8 +8,8 @@ export const sellerLogin = async (req, res) => {
             // gửi lại cookie chứa sellerToken cho người dùng
             res.cookie('sellerToken', token, {
                 httpOnly: true, //ngăn chặn truy cập từ JavaScript phía client
-                secure: process.env.NODE_ENV === 'production', //chỉ gửi cookie qua kết nối HTTPS trong môi trường production
-                sameSite: process.env.NODE_ENV === 'production' ? '' : 'strict', //cookie chỉ được gửi khi yêu cầu đến từ cùng một trang web
+                secure: true, //luôn sử dụng HTTPS
+                sameSite: 'none', // Cho phép cookie được gửi trong các request cross-site 
                 maxAge: 7 * 24 * 60 * 60 * 1000 // thời gian sống của cookie là 7 ngày
             })
             return res.status(201).json({ success: true, message: "Đăng nhập thành công" })
@@ -37,8 +37,8 @@ export const sellerLogout = async (req, res) => {
     try {
         res.clearCookie('sellerToken', { // xóa cookie chứa token
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? '' : 'strict'
+            secure: true,
+            sameSite: 'none'
         })
         return res.status(200).json({success: true, message: "Đăng xuất thành công"})
     } catch (error) {
