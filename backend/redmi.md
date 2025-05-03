@@ -11,4 +11,11 @@ server
   + Nếu thông tin hợp lệ, server tạo một JWT (JSON Web Token) chứa thông tin người dùng và chữ ký.
 2. Server gửi JWT về cho client. (lưu ở localStorage hoặc cookie)
 3. Gửi token trong các yêu cầu tiếp theo đến server (Mỗi khi gọi API, client gửi kèm JWT trong header hoặc cookie)
-4. Server kiểm tra xác thực token (Có hợp lệ không ?, Có bị chỉnh sửa không ? ,Còn hạn không ? )s
+4. Server kiểm tra xác thực token (Có hợp lệ không ?, Có bị chỉnh sửa không ? ,Còn hạn không ? )
+
+//Xử lý phản hồi từ Stripe: /stripe
+/*
+*   - Stripe gửi POST request tới webhook khi thanh toán thành công hoặc thất bại
+*   - Server xử lý các sự kiện đó để cập nhật/truy vết đơn hàng
+    -  Dùng metadata để truyền dữ liệu từ client → Stripe → server
+*/

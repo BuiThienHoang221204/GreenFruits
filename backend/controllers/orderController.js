@@ -53,7 +53,7 @@ export const placeOrderStripe = async (req, res) => {
 
         // khoi tạo đơn hàng trên stripe
         const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY);
-        //tạo đường dẫn thanh toán
+        //danh sách sản phẩm và giá, số lượng
         const line_items = productData.map((item) => ({
             price_data: {
                 currency: 'usd',
@@ -68,9 +68,9 @@ export const placeOrderStripe = async (req, res) => {
         const session = await stripeInstance.checkout.sessions.create({
             line_items,
             mode: 'payment',
-            success_url: `${origin}/loader?next=my-orders`,
-            cancel_url: `${origin}/cart`,
-            metadata: {
+            success_url: `${origin}/loader?next=my-orders`,// chuyển hướng đến trang đơn hàng sau khi thanh toán thành công
+            cancel_url: `${origin}/cart`, // chuyển hướng đến trang giỏ hàng nếu thanh toán thất bại
+            metadata: { //truyền orderId & userId sang Webhook 
                 orderId: order._id.toString(),
                 userId,
             },
@@ -81,7 +81,11 @@ export const placeOrderStripe = async (req, res) => {
         res.json({ success: false, message: 'Lỗi server', error: error.message });
     }
 }
-//Stripe webhook để xác nhận thanh toán: /stripe
+//Xử lý phản hồi từ Stripe: /stripe
+/*
+*   - Stripe gửi POST request tới webhook khi thanh toán thành công hoặc thất bại
+*   - Server xử lý các sự kiện đó để cập nhật/truy vết đơn hàng
+*/
 export const stripeWebhook = async (req, res) => {
     try {
         // khoi tạo đơn hàng trên stripe
@@ -89,22 +93,21 @@ export const stripeWebhook = async (req, res) => {
         const sig = req.headers['stripe-signature'];// lấy chữ ký từ header
         let event;
         try {
-            event = stripeInstance.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+            event = stripeInstance.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);// xác thực chữ ký
         } catch (error) {
             console.log('Lỗi xác thực webhook:', error.message);
             return res.status(400).send(`Webhook lỗi: ${error.message}`);
-        }
-        // Xử lý sự kiện thanh toán thành công
+        }   
         switch (event.type) {
-            case 'payment_intent.succeeded': {
+            case 'payment_intent.succeeded': { // Xử lý sự kiện thanh toán thành công
                 const paymentIntent = event.data.object;
                 const paymentIntentId = paymentIntent.id;
                 // Lấy thông tin đơn hàng từ metadata
-                const session = await stripeInstance.checkout.sessions.list({
+                const session = await stripeInstance.checkout.sessions.list({ //kiểm tra xem có đơn hàng nào trong metadata không
                     payment_intent: paymentIntentId,
                     limit: 1,
                 });
-                const { userId, orderId } = session.data[0].metadata;
+                const { userId, orderId } = session.data[0].metadata; //lấy userId và orderId từ metadata (api/order/stripe)
                 // Cập nhật trạng thái đơn hàng trong cơ sở dữ liệu
                 await Order.findByIdAndUpdate(orderId, { isPaid: true });
                 await User.findByIdAndUpdate(userId, { cartItems: {} });

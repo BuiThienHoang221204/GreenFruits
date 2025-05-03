@@ -20,8 +20,8 @@ export const register = async (req, res) => {
         // gửi lại cookie chứa token cho người dùng
         res.cookie('token', token, {
             httpOnly: true, //ngăn chặn truy cập từ JavaScript phía client
-            secure: process.env.NODE_ENV === 'production', //chỉ gửi cookie qua kết nối HTTPS trong môi trường production
-            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict', //cookie chỉ được gửi khi yêu cầu đến từ cùng một trang web
+            secure: true, //luôn sử dụng HTTPS
+            sameSite: 'none', // Cho phép cookie được gửi trong các request cross-site 
             maxAge: 7 * 24 * 60 * 60 * 1000 // thời gian sống của cookie là 7 ngày
         })
         return res.status(201).json({success: true, message: "Đăng ký thành công", user : {email: user.email, name: user.name}})
@@ -49,8 +49,8 @@ export const login = async (req, res) => {
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '7d'}) 
         res.cookie('token', token, {
             httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production', 
-            sameSite: process.env.NODE_ENV === 'production' ? '' : 'strict',
+            secure: true, 
+            sameSite: 'none',
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
         return res.status(201).json({success: true, message: "Đăng nhập thành công", user : {email: user.email, name: user.name}})
@@ -63,7 +63,7 @@ export const login = async (req, res) => {
 // Check Auth: /api/user/is-auth
 export const isAuth = async (req, res) => {
     try{
-        const {userId} = req.user.id // lấy id người dùng từ token đã giải mã trong middleware authUser
+        const userId = req.user.id // lấy id người dùng từ token đã giải mã trong middleware authUser
         const user = await User.findById(userId).select('-password') // không trả về password
         return res.status(200).json({success: true, user})
     }catch(err){
@@ -77,8 +77,8 @@ export const logout = async (req, res) => {
     try {
         res.clearCookie('token', { // xóa cookie chứa token
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: process.env.NODE_ENV === 'production' ? '' : 'strict'
+            secure: true,
+            sameSite: 'none'
         })
         return res.status(200).json({success: true, message: "Đăng xuất thành công"})
     } catch (error) {
