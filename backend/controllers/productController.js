@@ -23,6 +23,18 @@ export const addProduct = async (req, res) => {
 // Get All Products: api/product/list
 export const productList = async (req, res) => {
     try {
+        const products = await Product.find({inStock:true}) //lấy tất cả sản phẩm từ database
+        res.json({success: true, products})
+    } catch (error) {
+        console.log(error.message);
+        res.json({success: false, message: 'Lỗi server', error: error.message})
+        
+    }
+}
+
+// Get All Products: api/product/list/seller
+export const productListSeller = async (req, res) => {
+    try {
         const products = await Product.find({}) //lấy tất cả sản phẩm từ database
         res.json({success: true, products})
     } catch (error) {

@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppContext } from '../../context/AppContext';
 import { toast } from 'react-hot-toast';
 
 function ProductList() {
 
-  const { products, fetchProduct, axios } = useAppContext()
+  const { axios } = useAppContext()
+  const [products, setProducts] = useState([])
+
+  //load dữ liệu product
+  const fetchProduct = async () => {
+    try {
+      const { data } = await axios.get('/api/product/list/seller')
+      if (data.success) {
+        setProducts(data.products)
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error(data.message)
+    }
+  }
+
   const toggleStock = async (id, inStock) => {
     try {
       const { data } = await axios.post('/api/product/stock', { id, inStock })
@@ -19,6 +35,9 @@ function ProductList() {
     }
   }
 
+  useEffect(() => {
+    fetchProduct()
+  }, [products])
   return (
     <div className="no-scrollbar h-[95vh] flex-1 overflow-y-scroll flex flex-col justify-between">
       <div className="w-full md:p-10 p-4">
