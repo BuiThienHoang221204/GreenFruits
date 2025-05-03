@@ -20,14 +20,14 @@ function MainBanner() {
                 </p>
 
                 <div className='flex flex-wrap items-center gap-4 mt-2 font-medium'>
-                    <Link to='/all-product' className='group flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-100 rounded-lg text-primary transition-colors cursor-pointer'>
+                    <Link to='/all-product' className='px-3 py-3 group flex items-center gap-2 md:px-6 md:py-3 bg-white hover:bg-gray-100 rounded-lg text-primary transition-colors cursor-pointer'>
                         Shop Now
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
                     </Link>
 
-                    <Link to='/products/vegetables' className='group flex items-center gap-2 px-6 py-3 border border-white hover:bg-white/10 rounded-lg text-white transition-colors cursor-pointer'>
+                    <Link to='/products/vegetables' className='px-3 py-3 group flex items-center gap-2 md:px-6 md:py-3 border border-white hover:bg-white/10 rounded-lg text-white transition-colors cursor-pointer'>
                         Explore
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transition group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
                             <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
